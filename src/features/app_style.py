@@ -18,6 +18,10 @@ color_hover_button = "#CF6247"
 color_heading_chat = "#2A9D8F"
 color_heading_chat_click = "#238074"
 
+# ===== User input
+place_holder_color = "#3C6E82"
+color_background_input = "#162F39"
+
 # ====== Fonts
 # = Check operational system
 if platform.system() == "Windows":
@@ -30,5 +34,3 @@ font_button = (font, 18, 'bold')
 font_title = (font, 16, 'bold')
 font_menu = (font, 14, 'bold')
 font_text = (font, 12, 'bold')
-
-print(font)

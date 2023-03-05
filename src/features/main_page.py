@@ -5,7 +5,7 @@ from PIL import Image, ImageTk
 
 # Local Libraries
 from features.app_style import *
-from features.chat_bot import ChatBot
+from features.chat_widget import ChatWidget
 from features.delete_widgets import clear_widgets
 
 
@@ -13,7 +13,7 @@ class MainPage():
     def __init__(self, root, frame1, frame2) -> None:
         self.root = root
         self.frame = frame1
-        self.chat_bot = ChatBot(frame2)
+        self.chat_bot = ChatWidget(frame2)
         self.main_page(frame2)
         
 
