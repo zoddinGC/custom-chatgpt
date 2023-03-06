@@ -72,31 +72,8 @@ class EditKnowledge():
         options = (
                 [file[:file.find(".")] for file in listdir("src/data/") if isfile(join("src/data/", file))]
             )
-
-        dropdown_choice = customtkinter.StringVar(value="Escolha uma...")
-
-        self.__dropdown(
-            options=options,
-            func=self.__chat_dropdown,
-            dropdown_choice=dropdown_choice,
-            text="Base de conhecimento",
-            x=0.5,
-            y=0.23
-        )
-
-    
-    def __chat_dropdown(self, choice):
-        self.__reset_separator()
-
-        knowledge = pd.read_excel(f"src/data/{choice}.xlsx")
-
-        knowledge = knowledge.sort_index(ascending=False)
-
-        options = (
-                [f"{row:02d}. {knowledge['role'][row]}" for row in range(knowledge.shape[0]-1, -1, -1)]
-            )
         
-        options.insert(0, "+ Adicionar nova conversa")
+        options.insert(0, "+ Adicionar novo conhecimento")
 
         dropdown_choice = customtkinter.StringVar(value="Escolha uma...")
 
@@ -104,9 +81,9 @@ class EditKnowledge():
             options=options,
             func=self.__show_separator,
             dropdown_choice=dropdown_choice,
-            text="Conversas",
+            text="Base de conhecimento",
             x=0.5,
-            y=0.37
+            y=0.23
         )
 
     
