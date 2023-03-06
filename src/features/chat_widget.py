@@ -1,6 +1,5 @@
 # Python Libraries
 import customtkinter
-from PIL import ImageTk
 import tkinter as tk
 import threading
 
@@ -32,7 +31,7 @@ class ChatWidget():
         self.frame.pack_propagate(flag=False)
 
         # Frame1 widget
-        logo_img = ImageTk.PhotoImage(file="src/images/chat_bot_interface.png")
+        logo_img = tk.PhotoImage(file="src/images/chat_bot_interface.png")
         logo_wdiget = tk.Label(master=self.frame, image=logo_img, bg=color_background)
         logo_wdiget.image = logo_img
 
@@ -67,7 +66,7 @@ class ChatWidget():
     
     def __back_button(self, main_page:object):
         # Back button
-        back_image = ImageTk.PhotoImage(file="src/images/back_icon.png")
+        back_image = tk.PhotoImage(file="src/images/back_icon.png")
         self.first_time = True
         
         back_button = customtkinter.CTkButton(
@@ -105,7 +104,7 @@ class ChatWidget():
 
     def __send_button(self):
         # Send button
-        send_image = ImageTk.PhotoImage(file="src/images/send_icon.png")
+        send_image = tk.PhotoImage(file="src/images/send_icon.png")
         send_button = customtkinter.CTkButton(
             master=self.frame,
             image=send_image,

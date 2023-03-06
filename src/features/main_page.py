@@ -2,7 +2,6 @@
 import customtkinter
 from os import listdir
 from os.path import isfile, join
-from PIL import ImageTk
 import tkinter as tk
 
 
@@ -10,13 +9,15 @@ import tkinter as tk
 from features.app_style import *
 from features.chat_widget import ChatWidget
 from features.delete_widgets import clear_widgets
+from features.edit_widget import EditKnowledge
 
 
 class MainPage():
-    def __init__(self, root:object, frame1:object, frame2:object) -> None:
+    def __init__(self, root:object, frame1:object, frame2:object, frame3:object) -> None:
         self.root = root
         self.frame = frame1
         self.chat_widget = ChatWidget(frame2)
+        self.edit_widget = EditKnowledge(frame3)
         self.main_page(frame2)
         
 
@@ -29,7 +30,7 @@ class MainPage():
         self.frame.pack_propagate(flag=False)
 
         # Frame1 widget
-        logo_img = ImageTk.PhotoImage(file="src/images/custom_bot_logo.png")
+        logo_img = tk.PhotoImage(file="src/images/custom_bot_logo.png")
         logo_wdiget = tk.Label(master=self.frame, image=logo_img, bg=color_background)
         logo_wdiget.image = logo_img
 
@@ -53,7 +54,11 @@ class MainPage():
             fg_color=color_button,
             text_color=color_button_text,
             hover_color=color_hover_button,
-            command=lambda: self.chat_widget.start(self.frame, self, self.dropdown_choice)
+            command=lambda: self.chat_widget.start(
+                frame1=self.frame,
+                main_page=self,
+                dropdown_choice=self.dropdown_choice
+            )
         ).place(relx=0.5, rely=0.6, anchor="center")
 
         self.__text_info()
@@ -144,7 +149,10 @@ class MainPage():
             bg_color=color_background,
             fg_color=color_background,
             hover_color=color_background_input,
-            command=lambda: print("Worked!"),
+            command=lambda: self.edit_widget.start(
+                frame1=self.frame,
+                main_page=self
+            )
         )
 
         self.edit_button.place(relx=0.28, rely=0.77, anchor="center")
