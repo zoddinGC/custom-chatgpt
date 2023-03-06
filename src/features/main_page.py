@@ -90,10 +90,13 @@ class MainPage():
         if use == "0":
             if self.dropdown_show:
                 self.dropdown_options.destroy()
+                self.edit_button.destroy()
 
             self.dropdown_choice = "src/data/original.xlsx"
 
         else:
+            self.__edit_custom_knowledge()
+
             options = (
                 [file[:file.find(".")] for file in listdir("src/data/") if isfile(join("src/data/", file))]
             )
@@ -121,9 +124,30 @@ class MainPage():
                 justify="left"
             )
 
-            self.dropdown_options.place(relx=0.5, rely=0.77, anchor="center")
+            self.dropdown_options.place(relx=0.52, rely=0.77, anchor="center")
 
             self.dropdown_show = True
+
+        
+    def __edit_custom_knowledge(self):
+        edit_image = tk.PhotoImage(file="src/images/edit_icon.png")
+
+        self.edit_button = customtkinter.CTkButton(
+            master=self.frame,
+            image=edit_image,
+            text="",
+            width=15,
+            height=20,
+            corner_radius=5,
+            border_width=0,
+            border_color=color_background,
+            bg_color=color_background,
+            fg_color=color_background,
+            hover_color=color_background_input,
+            command=lambda: print("Worked!"),
+        )
+
+        self.edit_button.place(relx=0.28, rely=0.77, anchor="center")
 
 
     def __text_info(self):
@@ -133,4 +157,6 @@ class MainPage():
             bg=color_background,
             fg=color_button_text,
             font=font_text
-        ).place(relx=0.5, rely=0.9, anchor="center")
+        )
+        
+        textbox.place(relx=0.5, rely=0.9, anchor="center")
