@@ -10,6 +10,50 @@ from features.app_style import *
 from features.delete_widgets import clear_widgets
 
 
+def _dropdown(
+            frame:object,
+            options:str,
+            func,
+            dropdown_choice:str,
+            text:str,
+            x:float,
+            y:float
+        ):
+    
+    dropdown_options = customtkinter.CTkComboBox(
+        master=frame,
+        width=400,
+        height=35,
+        border_width=2,
+        border_color=color_background_input,
+        fg_color=color_background_input,
+        text_color=color_button_text,
+        button_color=color_button,
+        button_hover_color=color_press_button,
+        dropdown_fg_color=color_background,
+        dropdown_hover_color=color_background_input,
+        dropdown_text_color=color_button_text,
+        font=font_text,
+        dropdown_font=font_text,
+        values=options,
+        command=lambda choice: func(choice),
+        variable=dropdown_choice,
+        justify="left"
+    )
+
+    dropdown_options.place(relx=x, rely=y, anchor="center")
+
+    textbox = tk.Label(
+        master=frame,
+        text=text,
+        bg=color_background,
+        fg=color_button,
+        font=font_menu,
+    )
+
+    textbox.place(relx=(x - 0.38), rely=(y - 0.06), anchor="w")
+
+
 class EditKnowledge():
     def __init__(self, frame3:object) -> None:
         self.frame = frame3
@@ -77,7 +121,8 @@ class EditKnowledge():
 
         dropdown_choice = customtkinter.StringVar(value="Escolha uma...")
 
-        self.__dropdown(
+        _dropdown(
+            frame=self.frame,
             options=options,
             func=self.__show_separator,
             dropdown_choice=dropdown_choice,
@@ -89,6 +134,7 @@ class EditKnowledge():
     
     def __show_separator(self, choice):
         self.__reset_separator()
+        self.__show_content(choice=choice)
 
         if choice[0] == "+":
             separator_icon = tk.PhotoImage(file="src/images/plus_icon.png")
@@ -103,7 +149,7 @@ class EditKnowledge():
             text=""
         )
 
-        self.separator_icon.place(relx=0.5, rely=0.47, anchor="center")
+        self.separator_icon.place(relx=0.5, rely=0.33, anchor="center")
 
         self.separator_label = customtkinter.CTkLabel(
             master=self.frame,
@@ -111,48 +157,53 @@ class EditKnowledge():
             text=""
         )
 
-        self.separator_label.place(relx=0.5, rely=0.47, anchor="center")
+        self.separator_label.place(relx=0.5, rely=0.33, anchor="center")
 
         self._separator = True
 
-    
-    def __dropdown(self, options:str, func, dropdown_choice:str, text:str, x:float, y:float):
-        dropdown_options = customtkinter.CTkComboBox(
-            master=self.frame,
-            width=400,
-            height=35,
-            border_width=2,
-            border_color=color_background_input,
-            fg_color=color_background_input,
-            text_color=color_button_text,
-            button_color=color_button,
-            button_hover_color=color_press_button,
-            dropdown_fg_color=color_background,
-            dropdown_hover_color=color_background_input,
-            dropdown_text_color=color_button_text,
-            font=font_text,
-            dropdown_font=font_text,
-            values=options,
-            command=lambda choice: func(choice),
-            variable=dropdown_choice,
-            justify="left"
-        )
 
-        dropdown_options.place(relx=x, rely=y, anchor="center")
+    def __show_content(self, choice:str):
+        database = pd.read_excel(f"src/data/{choice}.xlsx")
+        database["content"] = database["content"].str[:40]
 
-        textbox = tk.Label(
+        choice = " ".join(choice.split("_")).title()
+
+        # "Content of [...]" at the begin
+        display_you = customtkinter.CTkLabel(
             master=self.frame,
-            text=text,
-            bg=color_background,
-            fg=color_button,
-            font=font_menu,
+            width=200,
+            height=50,
+            corner_radius=5,
+            bg_color=color_background,
+            fg_color=color_background,
+            text_color=color_button,
+            font=font_button,
+            text=f"Conteúdo de {choice}"
         )
+        display_you.place(relx=0.5, rely=0.42, anchor="center")
         
-        textbox.place(relx=(x - 0.38), rely=(y - 0.06), anchor="w")
+        # Database content text box
+        self.database_content = customtkinter.CTkTextbox(
+            master=self.frame,
+            width=350,
+            height=250,
+            corner_radius=5,
+            border_width=0,
+            border_spacing=10,
+            bg_color=color_background,
+            fg_color=color_background_input,
+            text_color= color_button_text,
+            scrollbar_button_color=color_background,
+            font=font_text,
+        )
+        self.database_content.place(relx=0.5, rely=0.67, anchor="center")
+
+        self.database_content.insert(tk.END, database)
 
 
     def __reset_separator(self):
         if self._separator:
+            self.database_content.destroy()
             self.separator_icon.destroy()
             self.separator_label.destroy()
             self._separator = False
