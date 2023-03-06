@@ -36,7 +36,7 @@ class MainPage():
         logo_wdiget.pack()
 
         self.dropdown_show = False
-        self.dropdown_choice = "src/data/empty_data.xlsx"
+        self.dropdown_choice = "src/data/original.xlsx"
 
         self.__start_button()
 
@@ -91,14 +91,14 @@ class MainPage():
             if self.dropdown_show:
                 self.dropdown_options.destroy()
 
-            self.dropdown_choice = "src/data/empty_data.xlsx"
+            self.dropdown_choice = "src/data/original.xlsx"
 
         else:
             options = (
                 [file[:file.find(".")] for file in listdir("src/data/") if isfile(join("src/data/", file))]
             )
 
-            dropdown_choice = customtkinter.StringVar(value="empty_data")
+            dropdown_choice = customtkinter.StringVar(value="original")
 
             self.dropdown_options = customtkinter.CTkComboBox(
                 master=self.frame,

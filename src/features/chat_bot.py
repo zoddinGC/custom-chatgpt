@@ -26,8 +26,6 @@ class ChatBot():
                     "content":knowledge_data["content"][row]
                 })
 
-        print(self.messages)
-
 
     def __generate_response(self, user_input:str):
         # Set up OpenAI API credentials from .env file

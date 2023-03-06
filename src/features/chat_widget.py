@@ -23,6 +23,7 @@ class ChatWidget():
     def start(self, frame1:object, main_page:object, dropdown_choice:str) -> None:
         # Delete other widgets
         clear_widgets(frame=frame1)
+
         threading.Thread(
             target=self.chat_bot.load_knowledge,
             args=dropdown_choice
@@ -38,6 +39,25 @@ class ChatWidget():
         logo_wdiget.image = logo_img
 
         logo_wdiget.pack()
+
+        # BotName widget
+        menu_name = "".join(dropdown_choice[9:dropdown_choice.index(".")])
+        menu_name = " ".join(menu_name.split('_')).title()
+
+        _cut = 19 if len(menu_name) > 19 else None
+        
+        menu_name = menu_name[:_cut] + " ChatGPT"
+
+        textbox = tk.Label(
+            master=self.frame,
+            text=menu_name,
+            bg=color_heading_chat,
+            fg=color_button_text,
+            font=font_title
+        ).place(relx=0.16, rely=0.025, anchor="nw")
+
+
+        # Load other widgets
         self.__back_button(main_page)
         self.__user_input()
         self.__send_button()
@@ -97,7 +117,7 @@ class ChatWidget():
             hover_color=color_background_input,
             command=lambda: self.__get_user_input()
         )
-        send_button.place(relx=0.85, rely=0.9, anchor="center")
+        send_button.place(relx=0.85, rely=0.901, anchor="center")
 
 
     def __get_user_input(self):
