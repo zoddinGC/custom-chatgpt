@@ -13,7 +13,7 @@ from features.delete_widgets import clear_widgets
 class EditKnowledge():
     def __init__(self, frame3:object) -> None:
         self.frame = frame3
-        self.separator = False
+        self._separator = False
 
     
     def start(self, frame1:object, main_page:object) -> None:
@@ -38,7 +38,7 @@ class EditKnowledge():
     def __back_button(self, main_page:object):
         # Back button
         back_image = tk.PhotoImage(file="src/images/back_icon.png")
-        self.first_time = True
+        self._separator = False
         
         back_button = customtkinter.CTkButton(
             master=self.frame,
@@ -136,7 +136,7 @@ class EditKnowledge():
 
         self.separator_label.place(relx=0.5, rely=0.47, anchor="center")
 
-        self.separator = True
+        self._separator = True
 
     
     def __dropdown(self, options:str, func, dropdown_choice:str, text:str, x:float, y:float):
@@ -175,9 +175,9 @@ class EditKnowledge():
 
 
     def __reset_separator(self):
-        if self.separator:
+        if self._separator:
             self.separator_icon.destroy()
             self.separator_label.destroy()
-            self.separator = False
+            self._separator = False
 
     
