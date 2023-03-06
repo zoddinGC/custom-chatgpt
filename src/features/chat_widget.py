@@ -1,9 +1,7 @@
 # Python Libraries
 import customtkinter
 from PIL import ImageTk
-from time import sleep
 import tkinter as tk
-
 import threading
 
 
