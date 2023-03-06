@@ -1,17 +1,23 @@
 # Python Libraries
 import customtkinter
+from PIL import ImageTk
+from time import sleep
 import tkinter as tk
-from PIL import Image, ImageTk
+
+import threading, queue
+
 
 # Local Libraries
 from features.app_style import *
 from features.delete_widgets import clear_widgets
+from features.chat_bot import ChatBot
 
 
 class ChatWidget():
     def __init__(self, frame2) -> None:
         self.frame = frame2
         self.first_time = True
+        self.chat_bot = ChatBot()
     
 
     def start(self, frame1, main_page):
@@ -36,6 +42,8 @@ class ChatWidget():
     def __back_button(self, main_page):
         # Back button
         back_image = ImageTk.PhotoImage(file="src/images/back_icon.png")
+        self.first_time = True
+        
         back_button = customtkinter.CTkButton(
             master=self.frame,
             image=back_image,
@@ -66,7 +74,7 @@ class ChatWidget():
 
         )
 
-        self.chat_entry.place(relx=0.80, rely=0.9, anchor="e")
+        self.chat_entry.place(relx=0.78, rely=0.9, anchor="e")
     
 
     def __send_button(self):
@@ -85,12 +93,11 @@ class ChatWidget():
             hover_color=color_background_input,
             command=lambda: self.__get_user_input()
         )
-        send_button.place(relx=0.87, rely=0.9, anchor="center")
+        send_button.place(relx=0.85, rely=0.9, anchor="center")
 
 
     def __get_user_input(self):
         user_input = self.chat_entry.get()
-        bot_answer = user_input # self.chat_gpt.get()
         
         # Add user textbox and text
         user_input_size = len(user_input) // 41
@@ -101,22 +108,47 @@ class ChatWidget():
         self.__add_text(self.user_text_box, user_input)
         # Delete user text from input widget
         self.chat_entry.delete(0, tk.END)
+        
+        threading.Thread(
+            target=self.__get_bot_input,
+            args=(user_input, user_input_size)
+        ).start()
 
+
+    def __get_bot_input(self, user_input, user_input_size):
         # Add bot input
+        bot_answer = self.chat_bot.chatbot(user_input=user_input)
         chat_gpt_size = len(bot_answer) // 41
-        if chat_gpt_size > 10:
-            chat_gpt_size = 10
+        if chat_gpt_size > 25:
+            chat_gpt_size = 25
 
-        self.__add_chat_gpt_text_box(user_input_size, chat_gpt_size)
+        self.__add_chatgpt_text_box(user_input_size, chat_gpt_size)
         self.__add_text(self.bot_text_box, bot_answer)
 
 
     def __add_user_text_box(self, user_input_size):
-        self.user_box_height = 30 + (20 * user_input_size) # 30 + in case size  = 0
+        self.user_box_height = 45 + (10 * user_input_size) # 30 + in case size  = 0
 
         if not self.first_time:
-            self.user_text_box.destroy()
+            self.__destroy_widgets()
+
+        # "You" at the begin
+        display_you = customtkinter.CTkTextbox(
+            master=self.frame,
+            width=100,
+            height=self.user_box_height,
+            corner_radius=5,
+            border_width=0,
+            border_spacing=10,
+            bg_color=color_background,
+            fg_color=color_background,
+            text_color=color_heading_chat,
+            font=font_text,
+        )
+        display_you.place(relx=0.83, rely=0.15, anchor="nw")
+        display_you.insert(tk.END, text="Você")
         
+        # User text box
         self.user_text_box = customtkinter.CTkTextbox(
             master=self.frame,
             width=300,
@@ -128,17 +160,52 @@ class ChatWidget():
             fg_color=color_heading_chat,
             text_color= color_button_text,
             scrollbar_button_color=color_background,
-            font=font_text,            
+            font=font_text,
         )
-        self.user_text_box.place(relx=0.3, rely=0.2, anchor="nw")
+        self.user_text_box.place(relx=0.32, rely=0.2, anchor="nw")
+
+        self.__display_chatgpt_icon(user_input_size)
 
     
-    def __add_chat_gpt_text_box(self, user_input_size:int, bot_input_size:int):     
-        chat_gpt_box_height = 30 + (20 * bot_input_size) # 30 + in case size = 0
-
+    def __display_chatgpt_icon(self, user_input_size):
+        # "ChatGPT" at the begin
         if not self.first_time:
-            self.bot_text_box.destroy()
+            self.display_gpt.delete("1.0", tk.END)
+
+        self.display_gpt = customtkinter.CTkTextbox(
+            master=self.frame,
+            width=100,
+            height=self.user_box_height,
+            corner_radius=5,
+            border_width=0,
+            border_spacing=10,
+            bg_color=color_background,
+            fg_color=color_background,
+            text_color=color_button,
+            font=font_text,
+        )
+        self.display_gpt.place(relx=0.29, rely=0.25 + 0.035 * user_input_size, anchor="ne")
+        self.display_gpt.insert(tk.END, text="ChatGPT")
+
+        # Add writing icon for ChatGPT output
+        writing_icon = tk.PhotoImage(file="src/images/writing_message.png")
+
+        self.writing_widget = tk.Label(
+            master=self.frame,
+            image=writing_icon,
+            bg=color_background)
+        self.writing_widget.image = writing_icon
+
+        self.writing_widget.place(relx=0.2, rely=0.31 + 0.035 * user_input_size, anchor="ne")
+
+    
+    def __add_chatgpt_text_box(self, user_input_size:int, bot_input_size:int):     
+        chat_gpt_box_height = 45 + (10 * bot_input_size) # 30 + in case size = 0
+
+        # Remove ChatGPT writing icon
+        self.writing_widget.destroy()
         
+        # ChatGPT Text Box
         self.bot_text_box = customtkinter.CTkTextbox(
             master=self.frame,
             width=300,
@@ -159,6 +226,11 @@ class ChatWidget():
 
     def __add_text(self, text_box, text):
         text_box.insert(tk.END, text)
+
+    
+    def __destroy_widgets(self):
+        self.user_text_box.destroy()
+        self.bot_text_box.destroy()
 
 
     @property
