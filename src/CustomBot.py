@@ -10,7 +10,7 @@ from features.app_style import *
 
 # Initialize app 
 root = customtkinter.CTk()
-root.title("Custom Zoddin's Bot")
+root.title("Custom ChatGPT Bot")
 
 # Centering app
 x = root.winfo_screenwidth() // 2

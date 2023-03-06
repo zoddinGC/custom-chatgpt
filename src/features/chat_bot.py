@@ -1,6 +1,7 @@
 from dotenv import load_dotenv
 import openai
 import os
+import pandas as pd
 
 
 load_dotenv()
@@ -8,17 +9,18 @@ openai.api_key = os.getenv("API_KEY")
 
 class ChatBot():
     def __init__(self) -> None:
-        self.messages = [
-            {"role": "system",
-            "content": "You are a helpful assistant."}, 
-        ]
-        
+        self.messages = []
+    
+
+    def load_knowledge(self):
+        pass
+    
 
     # Define a function to generate a response from the model
-    def __generate_response(self, prompt):
+    def __generate_response(self, user_input:str):
         # Set up OpenAI API credentials from .env file
 
-        self.messages.append({"role": "user", "content": prompt})
+        self.messages.append({"role": "user", "content": user_input})
 
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
@@ -33,7 +35,7 @@ class ChatBot():
 
 
     # Define a function to run the chatbot
-    def chatbot(self, user_input):
+    def chatbot(self, user_input:str) -> str:
         response = self.__generate_response(user_input)
 
         while True:
