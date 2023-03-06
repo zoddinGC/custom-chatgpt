@@ -38,6 +38,14 @@ class ChatWidget():
 
         logo_wdiget.pack()
 
+        # Load other widgets
+        self.__name_bot(dropdown_choice)
+        self.__back_button(main_page)
+        self.__user_input()
+        self.__send_button()
+
+    
+    def __name_bot(self, dropdown_choice):
         # BotName widget
         menu_name = "".join(dropdown_choice[9:dropdown_choice.index(".")])
         menu_name = " ".join(menu_name.split('_')).title()
@@ -52,13 +60,9 @@ class ChatWidget():
             bg=color_heading_chat,
             fg=color_button_text,
             font=font_title
-        ).place(relx=0.16, rely=0.025, anchor="nw")
-
-
-        # Load other widgets
-        self.__back_button(main_page)
-        self.__user_input()
-        self.__send_button()
+        )
+        
+        textbox.place(relx=0.16, rely=0.025, anchor="nw")
 
     
     def __back_button(self, main_page:object):
