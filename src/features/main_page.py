@@ -74,7 +74,7 @@ class MainPage():
             border_color=color_button,
             text_color=color_button_text,
             text_color_disabled=color_background_input,
-            text="Usar conhecimento personalizado?",
+            text="Usar conhecimento personalizado",
             hover=True,
             variable=check_var,
             command=lambda: self.__custom_knowledge(check_var.get()),

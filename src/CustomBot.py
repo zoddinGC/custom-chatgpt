@@ -7,6 +7,9 @@ from PIL import Image, ImageTk
 from features.main_page import MainPage
 from features.app_style import *
 
+from warnings import filterwarnings
+filterwarnings("ignore")
+
 
 # Initialize app 
 root = customtkinter.CTk()

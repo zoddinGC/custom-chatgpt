@@ -8,3 +8,4 @@ customtkinter==5.1.2
 pillow==9.4.0
 pyglet==2.0.5
 pandas==1.5.3
+openpyxl==3.1.1

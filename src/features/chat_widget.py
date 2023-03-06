@@ -4,7 +4,7 @@ from PIL import ImageTk
 from time import sleep
 import tkinter as tk
 
-import threading, queue
+import threading
 
 
 # Local Libraries
@@ -23,8 +23,10 @@ class ChatWidget():
     def start(self, frame1:object, main_page:object, dropdown_choice:str) -> None:
         # Delete other widgets
         clear_widgets(frame=frame1)
-
-        print(dropdown_choice)
+        threading.Thread(
+            target=self.chat_bot.load_knowledge,
+            args=dropdown_choice
+        ).start()        
 
         # Create a new frame
         self.frame.tkraise()

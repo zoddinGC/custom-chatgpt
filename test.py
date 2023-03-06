@@ -1,1 +1,3 @@
-print(10 // 39)
+print(
+    list(zip([1, 2], ["a", "b"]))
+)

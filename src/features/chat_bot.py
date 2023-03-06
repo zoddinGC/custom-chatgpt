@@ -12,14 +12,25 @@ class ChatBot():
         self.messages = []
     
 
-    def load_knowledge(self):
-        pass
-    
+    def load_knowledge(self, *dropdown_choice):
+        self.messages = []
 
-    # Define a function to generate a response from the model
+        dropdown_choice = "".join(dropdown_choice)
+
+        knowledge_data = pd.read_excel(dropdown_choice)
+
+        if knowledge_data.shape[0] > 0:
+            for row in range(knowledge_data.shape[0]):
+                self.messages.append({
+                    "role":knowledge_data["role"][row],
+                    "content":knowledge_data["content"][row]
+                })
+
+        print(self.messages)
+
+
     def __generate_response(self, user_input:str):
         # Set up OpenAI API credentials from .env file
-
         self.messages.append({"role": "user", "content": user_input})
 
         response = openai.ChatCompletion.create(
@@ -28,13 +39,12 @@ class ChatBot():
             temperature=0.2
         )
 
-        message = response.choices[0].message.content
+        message = response.choices[0].message.content.strip()
         self.messages.append({"role":"assistant", "content": message})
 
         return message
 
 
-    # Define a function to run the chatbot
     def chatbot(self, user_input:str) -> str:
         response = self.__generate_response(user_input)
 
