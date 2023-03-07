@@ -10,14 +10,16 @@ from features.app_style import *
 from features.chat_widget import ChatWidget
 from features.helper_functions import clear_widgets
 from features.edit_widget import EditKnowledge
+from features.key_widget import OpenAIKey
 
 
 class MainPage():
-    def __init__(self, root:object, frame1:object, frame2:object, frame3:object) -> None:
+    def __init__(self, root:object, frame1:object, frame2:object, frame3:object, frame4:object) -> None:
         self.root = root
         self.frame = frame1
         self.chat_widget = ChatWidget(frame2)
         self.edit_widget = EditKnowledge(frame3)
+        self.api_key = OpenAIKey(frame4)
         self.main_page(frame2)
 
 
@@ -40,6 +42,9 @@ class MainPage():
         self.dropdown_choice = "src/data/original.xlsx"
 
         self.__start_button()
+        self.__text_info()
+        self.__check_box()
+        self.__api_key_icon()
 
 
     def __start_button(self):
@@ -62,9 +67,6 @@ class MainPage():
         )
         
         button1.place(relx=0.5, rely=0.6, anchor="center")
-
-        self.__text_info()
-        self.__check_box()
 
     
     def __check_box(self):
@@ -170,3 +172,26 @@ class MainPage():
         )
         
         textbox.place(relx=0.5, rely=0.9, anchor="center")
+
+
+    def __api_key_icon(self):
+        # API Key edit button
+        api_key_image = tk.PhotoImage(file="src/images/key_icon.png")
+        button2 = customtkinter.CTkButton(
+            master=self.frame,
+            image=api_key_image,
+            width=25,
+            height=50,
+            corner_radius=70,
+            text="",
+            font=font_button,
+            fg_color=color_background,
+            text_color=color_button_text,
+            hover_color=color_background_input,
+            command=lambda: self.api_key.start(
+                frame1=self.frame,
+                main_page=self,
+            )
+        )
+        
+        button2.place(relx=0.9, rely=0.07, anchor="center")

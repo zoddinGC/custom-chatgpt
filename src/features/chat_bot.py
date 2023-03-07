@@ -1,11 +1,11 @@
-import os
+from os import getenv
 from dotenv import load_dotenv
 import openai
 import pandas as pd
 
 
 load_dotenv()
-openai.api_key = os.getenv("API_KEY")
+openai.api_key = getenv("API_KEY")
 
 class ChatBot():
     def __init__(self) -> None:
@@ -36,14 +36,17 @@ class ChatBot():
         # Set up OpenAI API credentials from .env file
         self.messages.append({"role": "user", "content": user_input})
 
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=self.messages,
-            temperature=0.2
-        )
+        try:
+            response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=self.messages,
+                temperature=0.2
+            )
 
-        message = response.choices[0].message.content.strip()
-        self.messages.append({"role":"assistant", "content": message})
+            message = response.choices[0].message.content.strip()
+            self.messages.append({"role":"assistant", "content": message})
+        except:
+            message = "ATENÇÃO: Esta NÃO é uma mensagem do ChatGPT. Ocorreu um erro."
 
         return message
 
