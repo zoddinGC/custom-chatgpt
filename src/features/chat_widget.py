@@ -6,7 +6,7 @@ import customtkinter
 
 # Local Libraries
 from features.app_style import *
-from features.delete_widgets import clear_widgets
+from features.helper_functions import clear_widgets
 from features.chat_bot import ChatBot
 
 

@@ -8,7 +8,7 @@ import customtkinter
 # Local Libraries
 from features.app_style import *
 from features.chat_widget import ChatWidget
-from features.delete_widgets import clear_widgets
+from features.helper_functions import clear_widgets
 from features.edit_widget import EditKnowledge
 
 

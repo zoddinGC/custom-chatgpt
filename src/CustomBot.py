@@ -8,7 +8,7 @@ from features.main_page import MainPage
 from features.app_style import *
 
 
-# Initialize app 
+# Initialize app
 filterwarnings("ignore")
 root = customtkinter.CTk()
 root.title("Custom ChatGPT Bot")
@@ -31,4 +31,5 @@ for frame in (frame1, frame2, frame3):
 main_page = MainPage(root=root, frame1=frame1, frame2=frame2, frame3=frame3)
 
 # Run app
-root.mainloop()
+while True:
+    root.mainloop()
