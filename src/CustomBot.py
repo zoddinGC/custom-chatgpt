@@ -31,5 +31,4 @@ for frame in (frame1, frame2, frame3):
 main_page = MainPage(root=root, frame1=frame1, frame2=frame2, frame3=frame3)
 
 # Run app
-while True:
-    root.mainloop()
+root.mainloop()
