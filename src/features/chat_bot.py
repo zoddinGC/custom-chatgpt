@@ -1,11 +1,11 @@
 from os import getenv
-from dotenv import load_dotenv
 import openai
 import pandas as pd
 
 
-load_dotenv()
-openai.api_key = getenv("API_KEY")
+with open('openai_key.txt', 'r') as f:
+    f = f.read()
+    openai.api_key = f[f.find('=')+1:]
 
 class ChatBot():
     def __init__(self) -> None:

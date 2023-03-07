@@ -58,6 +58,7 @@ target/
 
 # DotEnv configuration
 .env
+openai_key.txt
 
 # Database
 *.db

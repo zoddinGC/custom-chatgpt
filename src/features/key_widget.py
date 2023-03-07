@@ -1,24 +1,26 @@
-from os import getenv, listdir
+from os import listdir
 import tkinter as tk
 import customtkinter
-from dotenv import load_dotenv
 import openai
 import threading
+import webbrowser
 
 # Local imports
 from features.helper_functions import clear_widgets
 from features.app_style import *
 
 
-load_dotenv()
-
 class OpenAIKey():
     def __init__(self, frame4:object) -> None:
         self.frame = frame4
-        self.API_KEY = getenv("API_KEY")
         self.first_time = True
 
-        if ".env" not in listdir():
+        try:
+            with open('openai_key.txt', 'r') as f:
+                f = f.read()
+                self.API_KEY = f[f.find('=')+1:]
+        except:
+            self.API_KEY = "Sem chave cadastrada"
             self.__save_in_env(create_env=True)
 
 
@@ -50,6 +52,7 @@ class OpenAIKey():
         self.__back_button(main_page)
         self.__edit_key()
         self.__save_button()
+        self.__youtube_tutorial_button()
 
 
     def __back_button(self, main_page:object):
@@ -118,8 +121,8 @@ class OpenAIKey():
         # Start button
         save_button = customtkinter.CTkButton(
             master=self.frame,
-            width = 100,
-            height = 50,
+            width=100,
+            height=50,
             corner_radius=70,
             text="SALVAR CHAVE",
             font=font_button,
@@ -137,9 +140,7 @@ class OpenAIKey():
             self.API_KEY = self.api_key_textbox.get("1.0", tk.END).strip()
             threading.Thread(target=self.__check_API())
 
-        with open(".env", "w") as f:
-                if self.API_KEY is None:
-                    self.API_KEY = "Sem chave cadastrada"
+        with open("openai_key.txt", "w") as f:
                 f.write(f"API_KEY={self.API_KEY}")
 
 
@@ -175,3 +176,27 @@ class OpenAIKey():
         self.message.place(relx=0.5, rely=0.6, anchor="center")
         self.first_time = False
         self.__show_api()
+
+
+    def __youtube_tutorial_button(self):
+        url = "rebrand.ly/tutorial_chatgpt"
+
+        play_image = tk.PhotoImage(file="src/images/play_icon.png")
+        
+        # Start button
+        save_button = customtkinter.CTkButton(
+            master=self.frame,
+            image=play_image,
+            width=40,
+            height=30,
+            corner_radius=70,
+            text="Como pegar\nminha chave?",
+            font=font_text,
+            fg_color=color_background,
+            text_color=color_button_text,
+            hover_color=color_background_input,
+            command=lambda: webbrowser.open(url=url),
+            compound="left"
+        )
+
+        save_button.place(relx=0.5, rely=0.85, anchor="center")
