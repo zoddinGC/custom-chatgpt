@@ -1,6 +1,7 @@
 # Python Libraries
 import customtkinter
 import tkinter as tk
+from warnings import filterwarnings
 
 # Local imports
 from features.main_page import MainPage
@@ -8,6 +9,7 @@ from features.app_style import *
 
 
 # Initialize app 
+filterwarnings("ignore")
 root = customtkinter.CTk()
 root.title("Custom ChatGPT Bot")
 
