@@ -1,9 +1,10 @@
 # Python Libraries
-from os import listdir
+from os import listdir, startfile
 from os.path import isfile, join
 import customtkinter
 import tkinter as tk
 import pandas as pd
+import threading
 
 # Local Libraries
 from features.app_style import *
@@ -57,7 +58,8 @@ def _dropdown(
 class EditKnowledge():
     def __init__(self, frame3:object) -> None:
         self.frame = frame3
-        self._separator = False
+        self._end = False
+        self._input = False
 
     
     def start(self, frame1:object, main_page:object) -> None:
@@ -82,7 +84,8 @@ class EditKnowledge():
     def __back_button(self, main_page:object):
         # Back button
         back_image = tk.PhotoImage(file="src/images/back_icon.png")
-        self._separator = False
+        self._end = False
+        self._input = False
         
         back_button = customtkinter.CTkButton(
             master=self.frame,
@@ -159,53 +162,145 @@ class EditKnowledge():
 
         self.separator_label.place(relx=0.5, rely=0.33, anchor="center")
 
-        self._separator = True
-
 
     def __show_content(self, choice:str):
-        database = pd.read_excel(f"src/data/{choice}.xlsx")
-        database["content"] = database["content"].str[:40]
+        original_choice = choice
 
-        choice = " ".join(choice.split("_")).title()
+        if choice[0] != "+":
+            database = pd.read_excel(f"src/data/{choice}.xlsx")
+            database["content"] = database["content"].str[:40]
 
-        # "Content of [...]" at the begin
-        display_you = customtkinter.CTkLabel(
-            master=self.frame,
-            width=200,
-            height=50,
-            corner_radius=5,
-            bg_color=color_background,
-            fg_color=color_background,
-            text_color=color_button,
-            font=font_button,
-            text=f"Conteúdo de {choice}"
-        )
-        display_you.place(relx=0.5, rely=0.42, anchor="center")
+            choice = " ".join(choice.split("_")).title()
+
+            # "Content of [...]" at the begin
+            self.display_database_name = customtkinter.CTkLabel(
+                master=self.frame,
+                width=200,
+                height=50,
+                corner_radius=5,
+                bg_color=color_background,
+                fg_color=color_background,
+                text_color=color_button,
+                font=font_button,
+                text=f"Conteúdo de {choice}"
+            )
+            self.display_database_name.place(relx=0.5, rely=0.42, anchor="center")
+            
+            # Database content text box
+            self.database_content = customtkinter.CTkTextbox(
+                master=self.frame,
+                width=350,
+                height=240,
+                corner_radius=5,
+                border_width=0,
+                border_spacing=10,
+                bg_color=color_background,
+                fg_color=color_background_input,
+                text_color= color_button_text,
+                scrollbar_button_color=color_background,
+                font=font_text,
+            )
+            self.database_content.place(relx=0.5, rely=0.67, anchor="center")
+
+            if database.shape[0] == 0:
+                database = "Empty"
+
+            self.database_content.insert(tk.END, database)
+
+            self.__end_button(
+                image="edit_icon_white",
+                x=0.5,
+                y=0.92,
+                text="Editar",
+                func=self.__get_user_input,
+                choice=original_choice
+            )
         
-        # Database content text box
-        self.database_content = customtkinter.CTkTextbox(
+        else:
+            self.__user_input()
+            self.__end_button(
+                image="plus_icon_white",
+                x=0.5,
+                y=0.7,
+                text="Adicionar",
+                func=self.__get_user_input,
+                choice=original_choice
+            )
+
+            self._input = True
+
+    
+    def __end_button(self, image:str, x:float, y:float, text:str, func, choice:str):
+        # Save button
+        end_image = tk.PhotoImage(file=f"src/images/{image}.png")
+
+        self.end_button = customtkinter.CTkButton(
+            master=self.frame,
+            image=end_image,
+            width=30,
+            height=35,
+            corner_radius=50,
+            text=text,
+            bg_color=color_background,
+            fg_color=color_heading_chat,
+            text_color=color_button_text,
+            hover_color=color_heading_chat_click,
+            font=font_button,
+            command=lambda: func(choice)
+        )
+
+        self.end_button.place(relx=x, rely=y, anchor="center")
+
+        self._end = True
+
+
+    def __user_input(self):       
+        self.chat_entry = customtkinter.CTkEntry(
             master=self.frame,
             width=350,
-            height=250,
-            corner_radius=5,
-            border_width=0,
-            border_spacing=10,
+            height=50,
+            corner_radius=60,
+            placeholder_text="Digite APENAS o nome do arquivo:",
             bg_color=color_background,
             fg_color=color_background_input,
-            text_color= color_button_text,
-            scrollbar_button_color=color_background,
-            font=font_text,
-        )
-        self.database_content.place(relx=0.5, rely=0.67, anchor="center")
+            border_color=color_background,
+            text_color=color_button_text,
+            placeholder_text_color=place_holder_color,
 
-        self.database_content.insert(tk.END, database)
+        )
+
+        self.chat_entry.place(relx=0.5, rely=0.58, anchor="center")
+
+    
+    def __get_user_input(self, choice):
+        def create_file():
+            pd.DataFrame(columns=["role", "content"]).to_excel(f"src/data/{user_input}.xlsx", index=False)
+        try:
+            user_input = self.chat_entry.get()
+
+            user_input = user_input.strip().lower()
+
+            # Delete user text from input widget
+            self.chat_entry.delete(0, tk.END)
+
+            threading.Thread(target=create_file())
+        
+        except:
+            startfile(f"src\data\{choice}.xlsx")
 
 
     def __reset_separator(self):
-        if self._separator:
-            self.database_content.destroy()
+        if self._end:
             self.separator_icon.destroy()
             self.separator_label.destroy()
-            self._separator = False
+            if self._input:
+                self.chat_entry.destroy()
+            else:
+                self.database_content.destroy()
+                self.display_database_name.destroy()
+            self.end_button.destroy()
+
+            self._input = False
+            self._end = False
 
     

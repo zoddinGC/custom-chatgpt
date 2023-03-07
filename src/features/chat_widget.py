@@ -84,7 +84,7 @@ class ChatWidget():
         ).place(relx=0.05, rely=0.05, anchor="center")
 
     
-    def __user_input(self, get:bool=False):       
+    def __user_input(self):     
         self.chat_entry = customtkinter.CTkEntry(
             master=self.frame,
             width=350,
