@@ -54,6 +54,8 @@ def _dropdown(
 
     textbox.place(relx=(x - 0.38), rely=(y - 0.06), anchor="w")
 
+    return dropdown_options
+
 
 class EditKnowledge():
     def __init__(self, frame3:object) -> None:
@@ -124,7 +126,7 @@ class EditKnowledge():
 
         dropdown_choice = customtkinter.StringVar(value="Escolha uma...")
 
-        _dropdown(
+        self.dropdown = _dropdown(
             frame=self.frame,
             options=options,
             func=self.__show_separator,
@@ -167,8 +169,13 @@ class EditKnowledge():
         original_choice = choice
 
         if choice[0] != "+":
-            database = pd.read_excel(f"src/data/{choice}.xlsx")
-            database["content"] = database["content"].str[:40]
+            database = pd.read_excel(f"src/data/{choice}.xlsx", usecols="A:B")
+            database = database.dropna()
+
+            try:
+                database["content"] = database["content"].str[:40]
+            except:
+                pass
 
             choice = " ".join(choice.split("_")).title()
 
@@ -284,6 +291,9 @@ class EditKnowledge():
             self.chat_entry.delete(0, tk.END)
 
             threading.Thread(target=create_file())
+
+            self.dropdown.destroy()
+            self.__database_dropdown()
         
         except:
             startfile(f"src\data\{choice}.xlsx")

@@ -17,7 +17,7 @@ class ChatBot():
 
         dropdown_choice = "".join(dropdown_choice)
 
-        knowledge_data = pd.read_excel(dropdown_choice)
+        knowledge_data = pd.read_excel(dropdown_choice, usecols="A:B")
 
         if knowledge_data.shape[0] > 0:
             for row in range(knowledge_data.shape[0]):
