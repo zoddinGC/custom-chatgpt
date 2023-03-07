@@ -12,10 +12,8 @@ class ChatBot():
         self.messages = []
 
 
-    def load_knowledge(self, *dropdown_choice):
+    def load_knowledge(self, dropdown_choice:str):
         self.messages = []
-
-        dropdown_choice = "".join(dropdown_choice)
 
         knowledge_data = pd.read_excel(dropdown_choice, usecols="A:B")
 

@@ -23,7 +23,7 @@ class ChatWidget():
 
         threading.Thread(
             target=self.chat_bot.load_knowledge,
-            args=dropdown_choice
+            args=(dropdown_choice,)
         ).start()     
 
         # Create a new frame
@@ -135,11 +135,11 @@ class ChatWidget():
         
         threading.Thread(
             target=self.__get_bot_output,
-            args=(user_input, user_input_size)
+            args=(user_input,)
         ).start()
 
 
-    def __get_bot_output(self, user_input:str, user_input_size:int):
+    def __get_bot_output(self, user_input:str):
         # Add bot input
         bot_answer = self.chat_bot.chatbot(user_input=user_input)
 
@@ -147,9 +147,8 @@ class ChatWidget():
             bot_answer = "ATENÇÃO: Isso não é uma mensagem do ChatGPT. \nUm ou mais cargos (roles) contém ERROR de nome. Verifique na base de conhecimento para encontrar o cargo errado."
 
         chat_gpt_size = len(bot_answer) // 41
-        chat_gpt_size = min(chat_gpt_size, 30)
 
-        self.__add_chatgpt_text_box(user_input_size, chat_gpt_size)
+        self.__add_chatgpt_text_box(chat_gpt_size)
         self.__add_text(self.bot_text_box, bot_answer)
 
 
@@ -189,15 +188,18 @@ class ChatWidget():
             scrollbar_button_color=color_background,
             font=font_text,
         )
-        self.user_text_box.place(relx=0.32, rely=0.2, anchor="nw")
+        self.user_text_box.place(relx=0.32, rely=0.2, anchor="nw")        
 
-        self.__display_chatgpt_icon(user_input_size)
+        self.__display_chatgpt_icon()
 
 
-    def __display_chatgpt_icon(self, user_input_size:int):
+    def __display_chatgpt_icon(self):
         # "ChatGPT" at the begin
         if not self.first_time:
             self.display_gpt.delete("1.0", tk.END)
+
+        self.user_text_box.update()
+        user_input_size = (self.user_text_box.winfo_height() - 45) / 600
 
         self.display_gpt = customtkinter.CTkTextbox(
             master=self.frame,
@@ -211,7 +213,7 @@ class ChatWidget():
             text_color=color_button,
             font=font_text,
         )
-        self.display_gpt.place(relx=0.29, rely=0.25 + 0.035 * user_input_size, anchor="ne")
+        self.display_gpt.place(relx=0.29, rely=0.25 + user_input_size, anchor="ne")
         self.display_gpt.insert(tk.END, text="ChatGPT")
 
         # Add writing icon for ChatGPT output
@@ -223,11 +225,18 @@ class ChatWidget():
             bg=color_background)
         self.writing_widget.image = writing_icon
 
-        self.writing_widget.place(relx=0.2, rely=0.31 + 0.035 * user_input_size, anchor="ne")
+        self.writing_widget.place(relx=0.215, rely=0.3 + user_input_size, anchor="ne")
 
 
-    def __add_chatgpt_text_box(self, user_input_size:int, bot_input_size:int):     
-        chat_gpt_box_height = 45 + 10 * (bot_input_size - user_input_size) # 30 + in case size = 0
+    def __add_chatgpt_text_box(self, bot_input_size:int):
+        self.display_gpt.update()
+        input_size_box = self.display_gpt.winfo_height()
+
+        chat_gpt_box_height = 45 + 12 * bot_input_size # 30 + in case size = 0
+        if input_size_box + chat_gpt_box_height > 276:
+            chat_gpt_box_height = 276
+
+        display_chatgpt_posy = input_size_box / 600
 
         # Remove ChatGPT writing icon
         self.writing_widget.destroy()
@@ -246,7 +255,7 @@ class ChatWidget():
             scrollbar_button_color=color_background,
             font=font_text,            
         )
-        self.bot_text_box.place(relx=0.7, rely=0.30 + 0.03 * user_input_size, anchor="ne")
+        self.bot_text_box.place(relx=0.7, rely=0.23 + display_chatgpt_posy, anchor="ne")
 
         self.first_time = False
 
