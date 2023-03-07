@@ -1,57 +1,43 @@
-ChatBot Rise
-==============================
 
--
+# Custom ChatGPT V1.0
 
-Project Organization
-------------
+Este projeto foi feito com o intuito de aprender a utilizar a nova API do ChatGPT conhecida como `chatgpt-3.5-turbo` e também de mostrar para pessoas de todas as áreas suas funcionalidades, lugares de uso e limitações.
 
-    ├── LICENSE
-    ├── Makefile           <- Makefile with commands like `make data` or `make train`
-    ├── README.md          <- The top-level README for developers using this project.
-    ├── data
-    │   ├── external       <- Data from third party sources.
-    │   ├── interim        <- Intermediate data that has been transformed.
-    │   ├── processed      <- The final, canonical data sets for modeling.
-    │   └── raw            <- The original, immutable data dump.
-    │
-    ├── docs               <- A default Sphinx project; see sphinx-doc.org for details
-    │
-    ├── models             <- Trained and serialized models, model predictions, or model summaries
-    │
-    ├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-    │                         the creator's initials, and a short `-` delimited description, e.g.
-    │                         `1.0-jqp-initial-data-exploration`.
-    │
-    ├── references         <- Data dictionaries, manuals, and all other explanatory materials.
-    │
-    ├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-    │   └── figures        <- Generated graphics and figures to be used in reporting
-    │
-    ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-    │                         generated with `pip freeze > requirements.txt`
-    │
-    ├── setup.py           <- makes project pip installable (pip install -e .) so src can be imported
-    ├── src                <- Source code for use in this project.
-    │   ├── __init__.py    <- Makes src a Python module
-    │   │
-    │   ├── data           <- Scripts to download or generate data
-    │   │   └── make_dataset.py
-    │   │
-    │   ├── features       <- Scripts to turn raw data into features for modeling
-    │   │   └── build_features.py
-    │   │
-    │   ├── models         <- Scripts to train models and then use trained models to make
-    │   │   │                 predictions
-    │   │   ├── predict_model.py
-    │   │   └── train_model.py
-    │   │
-    │   └── visualization  <- Scripts to create exploratory and results oriented visualizations
-    │       └── visualize.py
-    │
-    └── tox.ini            <- tox file with settings for running tox; see tox.readthedocs.io
+Assim, qualquer pessoa pode baixar este programa e utilizar em sua máquina para testar. Basta colocar a chave da sua conta do ChatGPT para linkar sua conta ao apliactivo e começar a brincar.
+
+Abaixo há um vídeo que você pode assistir para entender um pouco mais sobre como este aplicativo funciona. Foi desenvolvido 100% em Python.
+
+A base de dados que ele utiliza como conhecimento foi feita em Excel para que todos possam visualizar rapidamente como o ChatGPT entende as mensagens e também para rápida edição das mesmas para bases de conhecimento personalizadas.
 
 
---------
+## Demonstração
 
-<p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
+Futuramente, aqui estará um vídeo mostrando a aplicação.
+
+
+## Funcionalidades
+
+- Chat em tempo real com o ChatGPT
+- Uso de bases de conhecimento pré-feitas
+- Edição de qualquer base de conhecimento
+
+
+## Instalação
+
+No futuro, haverá um vídeo explicando a instalar a aplicação.
+
+```python
+  pip install
+```
+    
+## Stack utilizada
+
+**Front-end:** Python, Tkinter
+
+**Back-end:** Python, Excel
+
+
+## Autores
+
+- [@zoddinGC](https://github.com/zoddinGC/)
+
