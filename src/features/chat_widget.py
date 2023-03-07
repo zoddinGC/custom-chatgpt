@@ -1,7 +1,7 @@
 # Python Libraries
-import customtkinter
 import tkinter as tk
 import threading
+import customtkinter
 
 
 # Local Libraries
@@ -15,7 +15,7 @@ class ChatWidget():
         self.frame = frame2
         self.first_time = True
         self.chat_bot = ChatBot()
-    
+
 
     def start(self, frame1:object, main_page:object, dropdown_choice:str) -> None:
         # Delete other widgets
@@ -24,7 +24,7 @@ class ChatWidget():
         threading.Thread(
             target=self.chat_bot.load_knowledge,
             args=dropdown_choice
-        ).start()        
+        ).start()     
 
         # Create a new frame
         self.frame.tkraise()
@@ -43,14 +43,14 @@ class ChatWidget():
         self.__user_input()
         self.__send_button()
 
-    
+
     def __name_bot(self, dropdown_choice):
         # BotName widget
         menu_name = "".join(dropdown_choice[9:dropdown_choice.index(".")])
         menu_name = " ".join(menu_name.split('_')).title()
 
         _cut = 19 if len(menu_name) > 19 else None
-        
+
         menu_name = menu_name[:_cut] + " ChatGPT"
 
         textbox = tk.Label(
@@ -60,15 +60,15 @@ class ChatWidget():
             fg=color_button_text,
             font=font_title
         )
-        
+
         textbox.place(relx=0.16, rely=0.025, anchor="nw")
 
-    
+
     def __back_button(self, main_page:object):
         # Back button
         back_image = tk.PhotoImage(file="src/images/back_icon.png")
         self.first_time = True
-        
+
         back_button = customtkinter.CTkButton(
             master=self.frame,
             image=back_image,
@@ -83,7 +83,7 @@ class ChatWidget():
             command=lambda: main_page.main_page(self.frame)
         ).place(relx=0.05, rely=0.05, anchor="center")
 
-    
+
     def __user_input(self):     
         self.chat_entry = customtkinter.CTkEntry(
             master=self.frame,
@@ -100,7 +100,7 @@ class ChatWidget():
         )
 
         self.chat_entry.place(relx=0.78, rely=0.9, anchor="e")
-    
+
 
     def __send_button(self):
         # Send button
@@ -123,11 +123,10 @@ class ChatWidget():
 
     def __get_user_input(self):
         user_input = self.chat_entry.get()
-        
+
         # Add user textbox and text
         user_input_size = len(user_input) // 41
-        if user_input_size > 4:
-            user_input_size = 4
+        user_input_size = min(user_input_size, 4)
 
         self.__add_user_text_box(user_input_size=user_input_size)
         self.__add_text(self.user_text_box, user_input)
@@ -144,8 +143,7 @@ class ChatWidget():
         # Add bot input
         bot_answer = self.chat_bot.chatbot(user_input=user_input)
         chat_gpt_size = len(bot_answer) // 41
-        if chat_gpt_size > 30:
-            chat_gpt_size = 30
+        chat_gpt_size = min(chat_gpt_size, 30)
 
         self.__add_chatgpt_text_box(user_input_size, chat_gpt_size)
         self.__add_text(self.bot_text_box, bot_answer)
@@ -172,7 +170,7 @@ class ChatWidget():
         )
         display_you.place(relx=0.83, rely=0.15, anchor="nw")
         display_you.insert(tk.END, text="Você")
-        
+
         # User text box
         self.user_text_box = customtkinter.CTkTextbox(
             master=self.frame,
@@ -191,7 +189,7 @@ class ChatWidget():
 
         self.__display_chatgpt_icon(user_input_size)
 
-    
+
     def __display_chatgpt_icon(self, user_input_size:int):
         # "ChatGPT" at the begin
         if not self.first_time:
@@ -223,13 +221,13 @@ class ChatWidget():
 
         self.writing_widget.place(relx=0.2, rely=0.31 + 0.035 * user_input_size, anchor="ne")
 
-    
+
     def __add_chatgpt_text_box(self, user_input_size:int, bot_input_size:int):     
         chat_gpt_box_height = 45 + 10 * (bot_input_size - user_input_size) # 30 + in case size = 0
 
         # Remove ChatGPT writing icon
         self.writing_widget.destroy()
-        
+
         # ChatGPT Text Box
         self.bot_text_box = customtkinter.CTkTextbox(
             master=self.frame,
@@ -252,7 +250,7 @@ class ChatWidget():
     def __add_text(self, text_box:object, text:str):
         text_box.insert(tk.END, text)
 
-    
+
     def __destroy_widgets(self):
         self.user_text_box.destroy()
         self.bot_text_box.destroy()

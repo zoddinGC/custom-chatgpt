@@ -1,10 +1,10 @@
 # Python Libraries
 from os import listdir, startfile
 from os.path import isfile, join
-import customtkinter
 import tkinter as tk
-import pandas as pd
 import threading
+import pandas as pd
+import customtkinter
 
 # Local Libraries
 from features.app_style import *
@@ -20,7 +20,7 @@ def _dropdown(
             x:float,
             y:float
         ):
-    
+
     dropdown_options = customtkinter.CTkComboBox(
         master=frame,
         width=400,
@@ -63,7 +63,7 @@ class EditKnowledge():
         self._end = False
         self._input = False
 
-    
+
     def start(self, frame1:object, main_page:object) -> None:
         clear_widgets(frame=frame1)
 
@@ -88,7 +88,7 @@ class EditKnowledge():
         back_image = tk.PhotoImage(file="src/images/back_icon.png")
         self._end = False
         self._input = False
-        
+
         back_button = customtkinter.CTkButton(
             master=self.frame,
             image=back_image,
@@ -101,9 +101,11 @@ class EditKnowledge():
             text_color=color_button_text,
             hover_color=color_heading_chat_click,
             command=lambda: main_page.main_page(self.frame)
-        ).place(relx=0.05, rely=0.05, anchor="center")
+        )
+        
+        back_button.place(relx=0.05, rely=0.05, anchor="center")
 
-    
+
     def __heading(self):
         # Heading widget
         textbox = tk.Label(
@@ -116,12 +118,12 @@ class EditKnowledge():
         
         textbox.place(relx=0.5, rely=0.05, anchor="center")
 
-    
+
     def __database_dropdown(self):
         options = (
                 [file[:file.find(".")] for file in listdir("src/data/") if isfile(join("src/data/", file))]
             )
-        
+
         options.insert(0, "+ Adicionar novo conhecimento")
 
         dropdown_choice = customtkinter.StringVar(value="Escolha uma...")
@@ -136,7 +138,7 @@ class EditKnowledge():
             y=0.23
         )
 
-    
+
     def __show_separator(self, choice):
         self.__reset_separator()
         self.__show_content(choice=choice)
@@ -236,7 +238,7 @@ class EditKnowledge():
 
             self._input = True
 
-    
+
     def __end_button(self, image:str, x:float, y:float, text:str, func, choice:str):
         # Save button
         end_image = tk.PhotoImage(file=f"src/images/{image}.png")
@@ -278,7 +280,7 @@ class EditKnowledge():
 
         self.chat_entry.place(relx=0.5, rely=0.58, anchor="center")
 
-    
+
     def __get_user_input(self, choice):
         def create_file():
             pd.DataFrame(columns=["role", "content"]).to_excel(f"src/data/{user_input}.xlsx", index=False)
@@ -294,7 +296,7 @@ class EditKnowledge():
 
             self.dropdown.destroy()
             self.__database_dropdown()
-        
+
         except:
             startfile(f"src\data\{choice}.xlsx")
 
@@ -312,5 +314,3 @@ class EditKnowledge():
 
             self._input = False
             self._end = False
-
-    

@@ -1,8 +1,8 @@
 # Python Libraries
-import customtkinter
 from os import listdir
 from os.path import isfile, join
 import tkinter as tk
+import customtkinter
 
 
 # Local Libraries
@@ -19,7 +19,7 @@ class MainPage():
         self.chat_widget = ChatWidget(frame2)
         self.edit_widget = EditKnowledge(frame3)
         self.main_page(frame2)
-        
+
 
     def main_page(self, frame2:object) -> None:
         # Delete other widgets
@@ -59,7 +59,9 @@ class MainPage():
                 main_page=self,
                 dropdown_choice=self.dropdown_choice
             )
-        ).place(relx=0.5, rely=0.6, anchor="center")
+        )
+        
+        button1.place(relx=0.5, rely=0.6, anchor="center")
 
         self.__text_info()
         self.__check_box()

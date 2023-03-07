@@ -11,10 +11,13 @@ color_background = "#264653"
 
 # = Button
 color_button = "#E76F51"
-color_button_text = "#FFFFFF"
 color_press_button = "#955E52"
+
+color_button_text = "#FFFFFF"
 color_press_button_text = "#E6C5A6"
+
 color_hover_button = "#CF6247"
+
 color_heading_chat = "#2A9D8F"
 color_heading_chat_click = "#238074"
 

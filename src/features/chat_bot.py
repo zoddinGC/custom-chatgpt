@@ -1,6 +1,6 @@
+import os
 from dotenv import load_dotenv
 import openai
-import os
 import pandas as pd
 
 
@@ -10,7 +10,7 @@ openai.api_key = os.getenv("API_KEY")
 class ChatBot():
     def __init__(self) -> None:
         self.messages = []
-    
+
 
     def load_knowledge(self, *dropdown_choice):
         self.messages = []
