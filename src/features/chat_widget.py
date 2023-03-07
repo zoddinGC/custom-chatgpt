@@ -134,14 +134,18 @@ class ChatWidget():
         self.chat_entry.delete(0, tk.END)
         
         threading.Thread(
-            target=self.__get_bot_input,
+            target=self.__get_bot_output,
             args=(user_input, user_input_size)
         ).start()
 
 
-    def __get_bot_input(self, user_input:str, user_input_size:int):
+    def __get_bot_output(self, user_input:str, user_input_size:int):
         # Add bot input
         bot_answer = self.chat_bot.chatbot(user_input=user_input)
+
+        if bot_answer == "Error 007":
+            bot_answer = "ATENÇÃO: Isso não é uma mensagem do ChatGPT. \nUm ou mais cargos (roles) contém ERROR de nome. Verifique na base de conhecimento para encontrar o cargo errado."
+
         chat_gpt_size = len(bot_answer) // 41
         chat_gpt_size = min(chat_gpt_size, 30)
 

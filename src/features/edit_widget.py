@@ -269,7 +269,7 @@ class EditKnowledge():
             width=350,
             height=50,
             corner_radius=60,
-            placeholder_text="Digite APENAS o nome do arquivo:",
+            placeholder_text="Digite APENAS o NOME da base:",
             bg_color=color_background,
             fg_color=color_background_input,
             border_color=color_background,

@@ -21,6 +21,10 @@ class ChatBot():
 
         if knowledge_data.shape[0] > 0:
             for row in range(knowledge_data.shape[0]):
+                if knowledge_data["role"][row] not in ["user", "assistant", "system"]:
+                    self.messages = "Error 007"
+                    break
+
                 self.messages.append({
                     "role":knowledge_data["role"][row],
                     "content":knowledge_data["content"][row]
@@ -28,6 +32,9 @@ class ChatBot():
 
 
     def __generate_response(self, user_input:str):
+        if self.messages == "Error 007":
+            return self.messages
+        
         # Set up OpenAI API credentials from .env file
         self.messages.append({"role": "user", "content": user_input})
 
