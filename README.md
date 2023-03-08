@@ -10,6 +10,15 @@ Abaixo há um vídeo que você pode assistir para entender um pouco mais sobre c
 A base de dados que ele utiliza como conhecimento foi feita em Excel para que todos possam visualizar rapidamente como o ChatGPT entende as mensagens e também para rápida edição das mesmas para bases de conhecimento personalizadas.
 
 
+## Instalação
+
+No futuro, haverá um vídeo explicando a instalar a aplicação.
+
+```python
+  pip install
+```
+
+
 ## Demonstração
 
 Futuramente, aqui estará um vídeo mostrando a aplicação.
@@ -21,18 +30,10 @@ Futuramente, aqui estará um vídeo mostrando a aplicação.
 - Uso de bases de conhecimento pré-feitas
 - Edição de qualquer base de conhecimento
 
-
-## Instalação
-
-No futuro, haverá um vídeo explicando a instalar a aplicação.
-
-```python
-  pip install
-```
     
 ## Stack utilizada
 
-**Front-end:** Python, Tkinter
+**Front-end:** Tkinter
 
 **Back-end:** Python, Excel
 
