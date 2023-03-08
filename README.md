@@ -38,7 +38,7 @@ Futuramente, aqui estará um vídeo mostrando a aplicação.
 **Back-end:** Python, Excel
 
 
-## Autores
+## Autor
 
 - [@zoddinGC](https://github.com/zoddinGC/)
 
