@@ -12,16 +12,15 @@ A base de dados que ele utiliza como conhecimento foi feita em Excel para que to
 
 ## Instalação
 
-No futuro, haverá um vídeo explicando a instalar a aplicação.
+Assista ao vídeo abaixo para entender como instalar a aplicação.
 
-```python
-  pip install
-```
+[![COMO INSTALAR CUSTOM CHATGPT](http://img.youtube.com/vi/dvWfFrWAgmo/0.jpg)](https://www.youtube.com/watch?v=dvWfFrWAgmo "Instalação Custom ChatGPT")
 
 
 ## Demonstração
 
-Futuramente, aqui estará um vídeo mostrando a aplicação.
+Assista ao vídeo abaixo para entender como a ferramenta funciona e divirta-se!
+[![COMO INSTALAR CUSTOM CHATGPT](http://img.youtube.com/vi/3KlVZibOYvE/0.jpg)](https://www.youtube.com/watch?v=3KlVZibOYvE "Instalação Custom ChatGPT")
 
 
 ## Funcionalidades
