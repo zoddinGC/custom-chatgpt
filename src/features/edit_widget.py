@@ -283,7 +283,8 @@ class EditKnowledge():
 
     def __get_user_input(self, choice):
         def create_file():
-            pd.DataFrame(columns=["role", "content"]).to_excel(f"src/data/{user_input}.xlsx", index=False)
+            with open(f"src/data/{user_input}.xlsx", "w") as f:
+                pd.DataFrame(columns=["role", "content"]).to_excel(f"src/data/{user_input}.xlsx", index=False)
         try:
             user_input = self.chat_entry.get()
 
@@ -298,7 +299,7 @@ class EditKnowledge():
             self.__database_dropdown()
 
         except:
-            startfile(f"src\data\{choice}.xlsx")
+            startfile(f"src/data/{choice}.xlsx")
 
 
     def __reset_separator(self):
