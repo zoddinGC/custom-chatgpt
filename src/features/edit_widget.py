@@ -1,5 +1,5 @@
 # Python Libraries
-from os import listdir, startfile
+from os import listdir, system
 from os.path import isfile, join
 import tkinter as tk
 import threading
@@ -299,7 +299,7 @@ class EditKnowledge():
             self.__database_dropdown()
 
         except:
-            startfile(f"src/data/{choice}.xlsx")
+            system(f"start EXCEL.EXE src/data/{choice}.xlsx")
 
 
     def __reset_separator(self):
