@@ -14,14 +14,14 @@ A base de dados que ele utiliza como conhecimento foi feita em Excel para que to
 
 Assista ao vídeo abaixo para entender como instalar a aplicação.
 
-[![COMO INSTALAR CUSTOM CHATGPT](http://img.youtube.com/vi/dvWfFrWAgmo/0.jpg)](https://www.youtube.com/watch?v=dvWfFrWAgmo "Instalação Custom ChatGPT")
+[![COMO INSTALAR CUSTOM CHATGPT](https://github.com/zoddinGC/custom-chatgpt/blob/main/youtube/Installer%20image.png?raw=true)](https://www.youtube.com/watch?v=dvWfFrWAgmo "Instalação Custom ChatGPT")
 
 
 ## Demonstração
 
 Assista ao vídeo abaixo para entender como a ferramenta funciona e divirta-se!
 
-[![COMO INSTALAR CUSTOM CHATGPT](http://img.youtube.com/vi/3KlVZibOYvE/0.jpg)](https://www.youtube.com/watch?v=3KlVZibOYvE "Instalação Custom ChatGPT")
+[![COMO INSTALAR CUSTOM CHATGPT](https://github.com/zoddinGC/custom-chatgpt/blob/main/youtube/Usage%20image.png?raw=true)](https://www.youtube.com/watch?v=3KlVZibOYvE "Instalação Custom ChatGPT")
 
 
 ## Funcionalidades
