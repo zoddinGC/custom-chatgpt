@@ -88,6 +88,11 @@ Assista ao vídeo abaixo para entender como a ferramenta funciona e divirta-se!
 - Edição de qualquer base de conhecimento
 
 &nbsp;
+## Disclaimer
+
+A aplicação não coleta seus dados nem suas bases de conhecimento. O único dipositivo que tem acesso as informações que você colocar, além da OpenAI, é o computador onde a aplicação está instalada.
+
+&nbsp;
 ## Stack utilizada
 
 **Front-end:** Python, Tkinter
@@ -103,4 +108,3 @@ Assista ao vídeo abaixo para entender como a ferramenta funciona e divirta-se!
 ## Autores
 
 - [@zoddinGC](https://github.com/zoddinGC/)
-
